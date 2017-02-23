@@ -20,24 +20,20 @@ import java.util.List;
 
 public class DerpAdapter extends RecyclerView.Adapter<DerpAdapter.DerpHolder>{
 
+    public interface ItemClickCallback<T>{
+        void onItemClick(T t);
+        void onSecondaryIconClick(T t, int position);
+    }
+
     private List<ListItem> listData;
     private LayoutInflater inflater;
 
-    private ItemClickCallback itemClickCallback;
+    private ItemClickCallback<ListItem> itemClickCallback;
 
-    public interface ItemClickCallback{
-        void onItemClick(int p);
-        void onSecondaryIconClick(int p);
-    }
-
-    public void setItemClickCallback(final ItemClickCallback itemClickCallback){
-        this.itemClickCallback = itemClickCallback;
-    }
-
-
-    public DerpAdapter(List<ListItem> listData, Context c){
+    public DerpAdapter(List<ListItem> listData, Context c, ItemClickCallback<ListItem> itemItemClickCallback){
         this.inflater = LayoutInflater.from(c);
         this.listData = listData;
+        this.itemClickCallback = itemItemClickCallback;
     }
 
     @Override
@@ -48,7 +44,8 @@ public class DerpAdapter extends RecyclerView.Adapter<DerpAdapter.DerpHolder>{
 
     @Override
     public void onBindViewHolder(DerpHolder holder, int position) {
-        ListItem item = listData.get(position);
+        final ListItem item = listData.get(position);
+        final int finalPosition = position;
         holder.title.setText(item.getTitle());
         holder.subTitle.setText(item.getSubTitle());
         if (item.isCheck()){
@@ -56,6 +53,22 @@ public class DerpAdapter extends RecyclerView.Adapter<DerpAdapter.DerpHolder>{
         } else{
             holder.secondIcon.setImageResource(R.drawable.ic_check_box_outline_blank_black_24dp);
         }
+
+        // add click listener
+        // TODO: 23.02.17 retrolambda - library pro používání streamů z Java 8 v Javě 7
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                itemClickCallback.onItemClick(item);
+            }
+        });
+
+        holder.secondIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                itemClickCallback.onSecondaryIconClick(item, finalPosition);
+            }
+        });
     }
 
     public void setListData(ArrayList<ListItem> exerciseList){
@@ -68,7 +81,7 @@ public class DerpAdapter extends RecyclerView.Adapter<DerpAdapter.DerpHolder>{
         return listData.size();
     }
 
-    class DerpHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class DerpHolder extends RecyclerView.ViewHolder {
 
         private TextView title;
         private TextView subTitle;
@@ -78,24 +91,11 @@ public class DerpAdapter extends RecyclerView.Adapter<DerpAdapter.DerpHolder>{
 
         public DerpHolder(View itemView) {
             super(itemView);
-
             title = (TextView)itemView.findViewById(R.id.lbl_item_text);
             subTitle = (TextView)itemView.findViewById(R.id.lbl_sub_title);
             icon = (ImageView)itemView.findViewById(R.id.im_item_icon);
             secondIcon = (ImageView)itemView.findViewById(R.id.im_item_icon_secondary);
-            secondIcon.setOnClickListener(this);
             container = itemView.findViewById(R.id.cont_item_root);
-            container.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            if (v.getId() == R.id.cont_item_root){
-                itemClickCallback.onItemClick(getAdapterPosition());
-            } else{
-                itemClickCallback.onSecondaryIconClick(getAdapterPosition());
-            }
         }
     }
-
 }

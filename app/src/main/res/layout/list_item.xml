@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="72dp"
     android:background="@drawable/background_state_drawable"
-    android:clickable="true">
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+    >
 
     <ImageView
         android:id="@+id/im_item_icon"
@@ -24,7 +26,6 @@
         android:layout_marginRight="48dp"
         android:ellipsize="end"
         android:fontFamily="sans-serif"
-        android:singleLine="true"
         android:text="SKUSKA TU SOM"
         android:textColor="@android:color/black"
         android:textSize="16sp" />
@@ -38,7 +39,6 @@
         android:layout_marginRight="48dp"
         android:ellipsize="end"
         android:fontFamily="sans-serif"
-        android:singleLine="true"
         android:text="Popisok"
         android:textSize="14sp" />
 

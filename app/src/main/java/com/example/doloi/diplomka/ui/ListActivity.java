@@ -15,11 +15,7 @@ import com.example.doloi.diplomka.model.ListItem;
 
 import java.util.ArrayList;
 
-public class ListActivity extends AppCompatActivity implements DerpAdapter.ItemClickCallback {
-
-    private static final String BUNDLE_EXTRAS = "BUNDLE_EXTRAS";
-    private static final String EXTRA_QUOTE = "EXTRA_QUOTE";
-    private static final String EXTRA_ATTR = "EXTRA_ATTR";
+public class ListActivity extends AppCompatActivity implements DerpAdapter.ItemClickCallback<ListItem> {
 
     private RecyclerView recView;
     private DerpAdapter adapter;
@@ -36,9 +32,8 @@ public class ListActivity extends AppCompatActivity implements DerpAdapter.ItemC
         recView = (RecyclerView)findViewById(R.id.rec_list);
         recView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new DerpAdapter(DerpData.getListData(), this);
+        adapter = new DerpAdapter(listData, this, this);
         recView.setAdapter(adapter);
-        adapter.setItemClickCallback(this);
     }
 
     @Override
@@ -49,30 +44,19 @@ public class ListActivity extends AppCompatActivity implements DerpAdapter.ItemC
     }
 
     @Override
-    public void onItemClick(int p) {
-        ListItem item = (ListItem) listData.get(p);
-
-        Intent i = new Intent(this, DetailActivity.class);
-
-        Bundle extras = new Bundle();
-        extras.putString(EXTRA_QUOTE, item.getTitle());
-        extras.putString(EXTRA_ATTR, item.getSubTitle());
-
-        i.putExtra(BUNDLE_EXTRAS,extras);
+    public void onItemClick(ListItem item) {
+        Intent i = DetailActivity.newInstance(this, item.getTitle(), item.getSubTitle());
         startActivity(i);
     }
 
     @Override
-    public void onSecondaryIconClick(int p) {
-        ListItem item = (ListItem) listData.get(p);
-
+    public void onSecondaryIconClick(ListItem item, int position) {
         if (item.isCheck()){
             item.setCheck(false);
         }else {
             item.setCheck(true);
         }
 
-        adapter.setListData(listData);
-        adapter.notifyDataSetChanged();
+        adapter.notifyItemChanged(position);
     }
 }
