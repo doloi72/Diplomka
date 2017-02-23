@@ -87,7 +87,6 @@ public class DerpAdapter extends RecyclerView.Adapter<DerpAdapter.DerpHolder>{
         private TextView subTitle;
         private ImageView icon;
         private ImageView secondIcon;
-        private View container;
 
         public DerpHolder(View itemView) {
             super(itemView);
@@ -95,7 +94,6 @@ public class DerpAdapter extends RecyclerView.Adapter<DerpAdapter.DerpHolder>{
             subTitle = (TextView)itemView.findViewById(R.id.lbl_sub_title);
             icon = (ImageView)itemView.findViewById(R.id.im_item_icon);
             secondIcon = (ImageView)itemView.findViewById(R.id.im_item_icon_secondary);
-            container = itemView.findViewById(R.id.cont_item_root);
         }
     }
 }
