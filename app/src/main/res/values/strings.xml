@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">News</string>
     <string name="app_detail_name">Detail</string>
+    <string name="app_geo_name">Geolocation</string>
 </resources>
