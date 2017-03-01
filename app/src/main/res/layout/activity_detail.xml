@@ -27,4 +27,13 @@
         android:textStyle="italic"
         />
 
+    <Button
+        android:id="@+id/location_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="jumpToLocation"
+        android:text="JUMP TO LOCATION"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
+
 </RelativeLayout>
