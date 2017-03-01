@@ -8,9 +8,19 @@
     tools:context="com.example.doloi.diplomka.ui.GeoActivity">
 
     <Button
+        android:id="@+id/maps_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="jumpToMaps"
+        android:text="JUMP TO Maps"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
         android:id="@+id/request_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/maps_button"
         android:text="REQUEST LOCATION"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"/>

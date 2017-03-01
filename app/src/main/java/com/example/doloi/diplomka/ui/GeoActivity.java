@@ -95,6 +95,11 @@ public class GeoActivity extends AppCompatActivity {
         });
 
     }
+
+    public void jumpToMaps(View view){
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
+    }
 }
 
 
